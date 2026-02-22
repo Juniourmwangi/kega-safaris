@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kega Safaris – Discover Africa's Wild Soul</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9902A;
+    --gold-light: #E8B84B;
+    --dark: #0D0D0B;
+    --dark2: #161610;
+    --earth: #3D2B1F;
+    --cream: #F5EDD8;
+    --cream2: #EDE0C4;
+    --text: #F0E8D0;
+    --text-muted: #B8A88A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--dark); color: var(--text); font-family: 'Outfit', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 1.2rem 3rem; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(to bottom, rgba(13,13,11,0.95), transparent); backdrop-filter: blur(2px); }
+  .logo { display: flex; flex-direction: column; line-height: 1; }
+  .logo-main { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 900; color: var(--gold-light); letter-spacing: 0.08em; text-transform: uppercase; }
+  .logo-sub { font-family: 'Cormorant Garamond', serif; font-size: 0.75rem; letter-spacing: 0.3em; color: var(--text-muted); text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+  .nav-links a { text-decoration: none; color: var(--cream); font-size: 0.82rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 400; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-cta { background: var(--gold); color: var(--dark) !important; padding: 0.6rem 1.4rem; font-weight: 600 !important; transition: background 0.3s, transform 0.2s !important; }
+  .nav-cta:hover { background: var(--gold-light) !important; transform: translateY(-1px); }
+
+  /* HERO SLIDESHOW */
+  .hero { position: relative; height: 100vh; display: flex; align-items: center; overflow: hidden; }
+  .hero-slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 1.4s ease-in-out; transform: scale(1.06); }
+  .hero-slide.active { opacity: 1; animation: heroZoom 8s ease-in-out forwards; }
+  .hero-slide::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(13,13,11,0.82) 35%, rgba(13,13,11,0.25) 100%); }
+  @keyframes heroZoom { from { transform: scale(1.06); } to { transform: scale(1.13); } }
+  .hero-overlay { position: absolute; bottom: 0; left: 0; right: 0; height: 35%; background: linear-gradient(to top, var(--dark), transparent); z-index: 2; }
+  .hero-dots { position: absolute; bottom: 6rem; right: 3rem; z-index: 10; display: flex; flex-direction: column; gap: 0.6rem; }
+  .hero-dot { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid rgba(232,184,75,0.6); background: transparent; cursor: pointer; transition: background 0.3s, transform 0.3s; }
+  .hero-dot.active { background: var(--gold-light); transform: scale(1.3); }
+  .hero-slide-caption { position: absolute; bottom: 9rem; left: 5rem; z-index: 10; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; color: rgba(232,184,75,0.8); letter-spacing: 0.15em; transition: opacity 0.6s; }
+  .hero-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; background: rgba(13,13,11,0.5); border: 1px solid rgba(201,144,42,0.4); color: var(--gold-light); width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; transition: background 0.3s; backdrop-filter: blur(6px); user-select: none; }
+  .hero-arrow:hover { background: rgba(201,144,42,0.25); }
+  .hero-arrow.left { left: 2rem; }
+  .hero-arrow.right { right: 2rem; }
+  .hero-content { position: relative; z-index: 2; padding: 0 5rem; max-width: 750px; animation: fadeUp 1.2s ease forwards; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-tag { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem; color: var(--gold-light); letter-spacing: 0.2em; margin-bottom: 1rem; display: block; animation: fadeUp 1.2s 0.2s ease both; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 6vw, 6rem); font-weight: 900; line-height: 1.05; color: var(--cream); animation: fadeUp 1.2s 0.4s ease both; }
+  .hero h1 em { font-style: italic; color: var(--gold-light); }
+  .hero p { margin-top: 1.5rem; font-size: 1.05rem; color: var(--text-muted); line-height: 1.8; max-width: 480px; animation: fadeUp 1.2s 0.6s ease both; }
+  .hero-btns { margin-top: 2.5rem; display: flex; gap: 1rem; animation: fadeUp 1.2s 0.8s ease both; }
+
+  /* BUTTONS */
+  .btn-primary { background: var(--gold); color: var(--dark); padding: 1rem 2.2rem; font-family: 'Outfit', sans-serif; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; border: none; cursor: pointer; transition: background 0.3s, transform 0.2s; display: inline-block; }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-outline { background: transparent; color: var(--cream); padding: 1rem 2.2rem; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; border: 1px solid rgba(245,237,216,0.4); cursor: pointer; transition: border-color 0.3s, color 0.3s, transform 0.2s; display: inline-block; }
+  .btn-outline:hover { border-color: var(--gold-light); color: var(--gold-light); transform: translateY(-2px); }
+
+  /* STATS BAR */
+  .stats-bar { background: var(--earth); padding: 2rem 5rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; border-top: 2px solid var(--gold); }
+  .stat { text-align: center; padding: 1rem; }
+  .stat-number { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--gold-light); }
+  .stat-label { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream2); margin-top: 0.3rem; }
+
+  /* SHARED */
+  section { padding: 6rem 5rem; }
+  .section-tag { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--gold); letter-spacing: 0.25em; display: block; margin-bottom: 0.8rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; color: var(--cream); line-height: 1.15; }
+  .section-title em { font-style: italic; color: var(--gold-light); }
+  .divider { width: 60px; height: 2px; background: var(--gold); margin: 1.5rem 0; }
+
+  /* GALLERY SECTION */
+  .gallery-section { background: var(--dark); padding: 5rem 5rem 4rem; }
+  .gallery-header { text-align: center; margin-bottom: 3rem; }
+  .gallery-header .divider { margin: 1.2rem auto; }
+  .gallery-sub { color: var(--text-muted); font-size: 0.92rem; max-width: 500px; margin: 0 auto; line-height: 1.8; }
+  .gallery-viewer { display: flex; flex-direction: column; gap: 1rem; }
+  .gallery-main-wrap { position: relative; width: 100%; height: 520px; overflow: hidden; background: #000; }
+  #galleryMain { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.7s ease, transform 0.7s ease; }
+  #galleryMain.fade-out { opacity: 0; transform: scale(1.03); }
+  .gallery-main-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem 2rem; background: linear-gradient(to top, rgba(13,13,11,0.85), transparent); display: flex; justify-content: space-between; align-items: flex-end; }
+  .gallery-location { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; color: var(--cream); letter-spacing: 0.05em; }
+  .gallery-counter { font-size: 0.75rem; letter-spacing: 0.2em; color: var(--gold-light); text-transform: uppercase; }
+  .gallery-nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(13,13,11,0.6); border: 1px solid rgba(201,144,42,0.35); color: var(--gold-light); width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; transition: background 0.3s; backdrop-filter: blur(6px); z-index: 5; user-select: none; }
+  .gallery-nav-btn:hover { background: rgba(201,144,42,0.25); }
+  .gallery-nav-left { left: 1.2rem; }
+  .gallery-nav-right { right: 1.2rem; }
+  .gallery-thumbs { display: flex; gap: 0.6rem; overflow-x: auto; padding-bottom: 0.5rem; scrollbar-width: thin; scrollbar-color: var(--gold) transparent; }
+  .gallery-thumbs::-webkit-scrollbar { height: 4px; }
+  .gallery-thumbs::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+  .gallery-thumb { flex-shrink: 0; width: 110px; height: 70px; object-fit: cover; cursor: pointer; opacity: 0.55; border: 2px solid transparent; transition: opacity 0.3s, border-color 0.3s, transform 0.3s; }
+  .gallery-thumb:hover { opacity: 0.85; transform: scale(1.04); }
+  .gallery-thumb.active { opacity: 1; border-color: var(--gold-light); transform: scale(1.06); }
+  .gallery-controls { display: flex; align-items: center; gap: 1.5rem; margin-top: 1rem; justify-content: center; }
+  .gallery-play-btn { background: transparent; border: 1px solid rgba(201,144,42,0.4); color: var(--gold-light); padding: 0.5rem 1.4rem; font-size: 0.78rem; letter-spacing: 0.1em; cursor: pointer; font-family: 'Outfit', sans-serif; transition: background 0.3s; }
+  .gallery-play-btn:hover { background: rgba(201,144,42,0.12); }
+  .gallery-progress-wrap { flex: 1; max-width: 300px; height: 2px; background: rgba(201,144,42,0.15); overflow: hidden; }
+  .gallery-progress-bar { height: 100%; background: var(--gold); width: 0%; transition: width linear; }
+
+  /* DESTINATIONS */
+  .destinations { background: var(--dark2); }
+  .dest-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3.5rem; }
+  .dest-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; grid-template-rows: 300px 300px; gap: 1.2rem; }
+  .dest-card { position: relative; overflow: hidden; cursor: pointer; }
+  .dest-card:first-child { grid-row: 1 / 3; }
+  .dest-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; display: block; }
+  .dest-card:hover img { transform: scale(1.08); }
+  .dest-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,13,11,0.9) 0%, rgba(13,13,11,0.1) 60%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem; transition: background 0.3s; }
+  .dest-card:hover .dest-card-overlay { background: linear-gradient(to top, rgba(13,13,11,0.95) 0%, rgba(13,13,11,0.3) 60%); }
+  .dest-country { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 0.3rem; }
+  .dest-name { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--cream); }
+  .dest-card:first-child .dest-name { font-size: 2.2rem; }
+  .dest-desc { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.5rem; line-height: 1.6; max-height: 0; overflow: hidden; transition: max-height 0.4s; }
+  .dest-card:hover .dest-desc { max-height: 80px; }
+  .dest-badge { position: absolute; top: 1rem; right: 1rem; background: var(--gold); color: var(--dark); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.3rem 0.7rem; }
+
+  /* SERVICES */
+  .services-section { background: var(--dark); position: relative; }
+  .services-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 400px; background: url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=1800&q=70') center/cover; opacity: 0.07; }
+  .services-header { text-align: center; margin-bottom: 4rem; position: relative; }
+  .services-header .divider { margin: 1.5rem auto; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; position: relative; }
+  .service-card { background: linear-gradient(135deg, rgba(61,43,31,0.4), rgba(22,22,16,0.8)); border: 1px solid rgba(201,144,42,0.2); padding: 2.5rem; transition: border-color 0.3s, transform 0.3s, background 0.3s; position: relative; overflow: hidden; }
+  .service-card::before { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.4s; }
+  .service-card:hover::before { width: 100%; }
+  .service-card:hover { border-color: rgba(201,144,42,0.5); transform: translateY(-4px); }
+  .service-icon { font-size: 2.5rem; margin-bottom: 1.2rem; display: block; }
+  .service-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--cream); margin-bottom: 0.8rem; }
+  .service-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.8; }
+
+  /* MAASAI MARA */
+  .mara-section { background: var(--dark2); padding: 0; display: grid; grid-template-columns: 1fr 1fr; min-height: 600px; }
+  .mara-images { position: relative; overflow: hidden; }
+  .mara-img-main { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .mara-img-overlay { position: absolute; inset: 0; background: linear-gradient(to right, transparent 60%, var(--dark2)); }
+  .mara-badge-float { position: absolute; bottom: 2rem; left: 2rem; background: rgba(13,13,11,0.85); border: 1px solid var(--gold); padding: 0.8rem 1.2rem; backdrop-filter: blur(8px); }
+  .mara-badge-float span { display: block; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 0.2rem; }
+  .mara-badge-float strong { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--cream); }
+  .mara-content { padding: 5rem 4rem; display: flex; flex-direction: column; justify-content: center; }
+  .mara-highlights { margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; }
+  .mara-highlight { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem; border-left: 2px solid rgba(201,144,42,0.3); transition: border-color 0.3s; }
+  .mara-highlight:hover { border-color: var(--gold); }
+  .mara-highlight-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .mara-highlight-text h4 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--cream); margin-bottom: 0.2rem; }
+  .mara-highlight-text p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+
+  /* PARKS */
+  .parks-section { background: var(--dark); }
+  .parks-header { text-align: center; margin-bottom: 3rem; }
+  .parks-header .divider { margin: 1.5rem auto; }
+  .parks-scroll { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .park-pill { background: rgba(61,43,31,0.3); border: 1px solid rgba(201,144,42,0.15); padding: 1.2rem 1rem; text-align: center; transition: all 0.3s; cursor: pointer; }
+  .park-pill:hover { background: rgba(201,144,42,0.1); border-color: var(--gold); transform: translateY(-3px); }
+  .park-pill-emoji { font-size: 1.5rem; display: block; margin-bottom: 0.5rem; }
+  .park-pill-name { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--cream); }
+  .park-pill-region { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.1em; margin-top: 0.2rem; }
+
+  /* SOUTH AFRICA */
+  .sa-section { background: var(--dark2); display: grid; grid-template-columns: 1fr 1fr; padding: 0; }
+  .sa-content { padding: 5rem 4rem; display: flex; flex-direction: column; justify-content: center; }
+  .sa-card { position: relative; height: 160px; overflow: hidden; cursor: pointer; }
+  .sa-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; display: block; }
+  .sa-card:hover img { transform: scale(1.1); }
+  .sa-card-label { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(13,13,11,0.9), transparent); padding: 0.8rem; font-family: 'Playfair Display', serif; font-size: 0.9rem; color: var(--cream); }
+
+  /* BOOKING */
+  .booking-section { background: linear-gradient(135deg, var(--earth) 0%, #1a120a 100%); padding: 5rem; position: relative; overflow: hidden; }
+  .booking-section::before { content: ''; position: absolute; top: -50%; right: -20%; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(201,144,42,0.12), transparent 70%); }
+  .booking-inner { max-width: 900px; margin: 0 auto; text-align: center; position: relative; }
+  .booking-form { margin-top: 3rem; display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 1rem; background: rgba(13,13,11,0.5); padding: 1.5rem; border: 1px solid rgba(201,144,42,0.3); backdrop-filter: blur(10px); }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; text-align: left; }
+  .form-group label { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-light); }
+  .form-group select, .form-group input { background: rgba(255,255,255,0.06); border: 1px solid rgba(201,144,42,0.25); color: var(--cream); padding: 0.8rem 1rem; font-family: 'Outfit', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.3s; -webkit-appearance: none; cursor: pointer; }
+  .form-group select:focus, .form-group input:focus { border-color: var(--gold); }
+  .form-group select option { background: var(--dark2); color: var(--cream); }
+  .form-submit { display: flex; align-items: flex-end; }
+  .form-submit .btn-primary { width: 100%; padding: 0.85rem 1.5rem; font-size: 0.8rem; white-space: nowrap; }
+
+  /* TESTIMONIALS */
+  .testimonials-section { background: var(--dark); }
+  .testimonials-header { text-align: center; margin-bottom: 3.5rem; }
+  .testimonials-header .divider { margin: 1.5rem auto; }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .testi-card { background: rgba(61,43,31,0.2); border: 1px solid rgba(201,144,42,0.15); padding: 2rem; }
+  .testi-stars { color: var(--gold-light); font-size: 0.9rem; margin-bottom: 1rem; }
+  .testi-quote { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: var(--cream2); line-height: 1.7; margin-bottom: 1.5rem; }
+  .testi-author { display: flex; align-items: center; gap: 1rem; }
+  .testi-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--earth); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--gold-light); flex-shrink: 0; }
+  .testi-name { font-weight: 600; font-size: 0.9rem; color: var(--cream); }
+  .testi-location { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.1rem; }
+
+  /* CONTACT */
+  .contact-section { background: var(--dark2); display: grid; grid-template-columns: 1fr 1fr; padding: 0; }
+  .contact-info { padding: 5rem 4rem; background: linear-gradient(135deg, rgba(61,43,31,0.5), rgba(13,13,11,0.8)); display: flex; flex-direction: column; justify-content: center; }
+  .contact-items { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+  .contact-item { display: flex; align-items: flex-start; gap: 1rem; }
+  .contact-item-icon { width: 40px; height: 40px; background: rgba(201,144,42,0.15); border: 1px solid rgba(201,144,42,0.3); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+  .contact-item-text h4 { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 0.3rem; }
+  .contact-item-text p { font-size: 0.9rem; color: var(--cream2); line-height: 1.6; }
+  .contact-form-side { padding: 5rem 4rem; display: flex; flex-direction: column; justify-content: center; }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+  .contact-form input, .contact-form textarea, .contact-form select { background: rgba(255,255,255,0.05); border: 1px solid rgba(201,144,42,0.2); border-bottom: 1px solid rgba(201,144,42,0.4); color: var(--cream); padding: 1rem 1.2rem; font-family: 'Outfit', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.3s, background 0.3s; }
+  .contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--text-muted); }
+  .contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus { border-color: var(--gold); background: rgba(255,255,255,0.08); }
+  .contact-form textarea { resize: vertical; min-height: 120px; }
+  .contact-form select option { background: var(--dark2); }
+
+  /* FOOTER */
+  footer { background: #080806; padding: 4rem 5rem 2rem; border-top: 1px solid rgba(201,144,42,0.2); }
+  .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+  .footer-brand p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.8; margin-top: 1rem; max-width: 280px; }
+  .footer-col h4 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--gold-light); margin-bottom: 1.2rem; letter-spacing: 0.05em; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 0.6rem; }
+  .footer-col ul li a { text-decoration: none; color: var(--text-muted); font-size: 0.85rem; transition: color 0.3s; }
+  .footer-col ul li a:hover { color: var(--gold-light); }
+  .footer-bottom { border-top: 1px solid rgba(201,144,42,0.1); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-bottom p { font-size: 0.78rem; color: var(--text-muted); }
+  .social-links { display: flex; gap: 0.8rem; }
+  .social-link { width: 36px; height: 36px; border: 1px solid rgba(201,144,42,0.3); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; text-decoration: none; color: var(--text-muted); transition: all 0.3s; }
+  .social-link:hover { border-color: var(--gold); color: var(--gold-light); background: rgba(201,144,42,0.1); }
+
+  /* SCROLL REVEAL */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero-content { padding: 0 1.5rem; }
+    .stats-bar { grid-template-columns: 2fr 2fr; padding: 2rem 1.5rem; }
+    .dest-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+    .dest-card:first-child { grid-row: auto; }
+    .services-grid { grid-template-columns: 1fr; }
+    .mara-section { grid-template-columns: 1fr; }
+    .mara-images { height: 350px; }
+    .parks-scroll { grid-template-columns: repeat(2, 1fr); }
+    .sa-section { grid-template-columns: 1fr; }
+    .booking-form { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .contact-section { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-section { padding: 4rem 1.5rem; }
+    .gallery-main-wrap { height: 300px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <span class="logo-main">Kega Safaris</span>
+    <span class="logo-sub">Discover Africa's Wild Soul</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#destinations">Destinations</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#maasai-mara">Maasai Mara</a></li>
+    <li><a href="#south-africa">South Africa</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#booking" class="nav-cta">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO SLIDESHOW -->
+<section class="hero" id="home">
+  <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1516426122078-c23e76319801?w=1800&q=90')"></div>
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=1800&q=90')"></div>
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1504618223053-559bdef9dd5a?w=1800&q=90')"></div>
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1534177616072-ef7dc120449d?w=1800&q=90')"></div>
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1549366021-9f761d040a94?w=1800&q=90')"></div>
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1552751753-0fc84ae5b6c8?w=1800&q=90')"></div>
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=1800&q=90')"></div>
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1800&q=90')"></div>
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1540202403-b7abd6747a18?w=1800&q=90')"></div>
+  <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=1800&q=90')"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-slide-caption" id="heroCaption">Maasai Mara, Kenya</div>
+  <div class="hero-arrow left" id="heroPrev">&#8592;</div>
+  <div class="hero-arrow right" id="heroNext">&#8594;</div>
+  <div class="hero-dots" id="heroDots"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Kenya · South Africa · Beyond</span>
+    <h1>Where the Wild<br><em>Calls You Home</em></h1>
+    <p>From the golden plains of Maasai Mara to the dramatic shores of the Cape — Kega Safaris crafts unforgettable journeys across Africa's most breathtaking landscapes.</p>
+    <div class="hero-btns">
+      <a href="#booking" class="btn-primary">Plan My Safari</a>
+      <a href="#destinations" class="btn-outline">Explore Destinations</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-number">500+</div><div class="stat-label">Happy Travellers</div></div>
+  <div class="stat"><div class="stat-number">25+</div><div class="stat-label">Game Parks & Reserves</div></div>
+  <div class="stat"><div class="stat-number">10+</div><div class="stat-label">Years of Experience</div></div>
+  <div class="stat"><div class="stat-number">2</div><div class="stat-label">Countries Covered</div></div>
+</div>
+
+<!-- PHOTO GALLERY -->
+<section class="gallery-section" id="gallery">
+  <div class="gallery-header reveal">
+    <span class="section-tag">— Through the Lens</span>
+    <h2 class="section-title">Africa in <em>Every Frame</em></h2>
+    <div class="divider"></div>
+    <p class="gallery-sub">A living gallery of our safaris — from sunlit plains to starlit camps. Images rotate automatically.</p>
+  </div>
+  <div class="gallery-viewer">
+    <div class="gallery-main-wrap">
+      <img id="galleryMain" src="https://images.unsplash.com/photo-1516426122078-c23e76319801?w=1400&q=90" alt="Safari photo">
+      <div class="gallery-main-overlay">
+        <span class="gallery-location" id="galleryLocation">📍 Maasai Mara, Kenya</span>
+        <span class="gallery-counter" id="galleryCounter">1 / 14</span>
+      </div>
+      <div class="gallery-nav-btn gallery-nav-left" id="galleryPrev">&#8592;</div>
+      <div class="gallery-nav-btn gallery-nav-right" id="galleryNext">&#8594;</div>
+    </div>
+    <div class="gallery-thumbs" id="galleryThumbs"></div>
+  </div>
+  <div class="gallery-controls">
+    <button class="gallery-play-btn" id="galleryPlayBtn">⏸ Pause Slideshow</button>
+    <div class="gallery-progress-wrap"><div class="gallery-progress-bar" id="galleryProgress"></div></div>
+  </div>
+</section>
+
+<!-- DESTINATIONS -->
+<section class="destinations" id="destinations">
+  <div class="dest-header reveal">
+    <div>
+      <span class="section-tag">— Our Destinations</span>
+      <h2 class="section-title">Africa's<br><em>Finest Escapes</em></h2>
+    </div>
+    <a href="#booking" class="btn-outline">View All</a>
+  </div>
+  <div class="dest-grid reveal">
+    <div class="dest-card">
+      <div class="dest-badge">⭐ Signature</div>
+      <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?w=900&q=85" alt="Maasai Mara">
+      <div class="dest-card-overlay">
+        <div class="dest-country">Kenya</div>
+        <div class="dest-name">Maasai Mara</div>
+        <div class="dest-desc">Witness the world's greatest wildlife spectacle — the Great Migration and the Big Five on the golden savannah.</div>
+      </div>
+    </div>
+    <div class="dest-card">
+      <img src="https://images.unsplash.com/photo-1534177616072-ef7dc120449d?w=600&q=80" alt="Amboseli">
+      <div class="dest-card-overlay">
+        <div class="dest-country">Kenya</div>
+        <div class="dest-name">Amboseli</div>
+        <div class="dest-desc">Elephants silhouetted against Mount Kilimanjaro.</div>
+      </div>
+    </div>
+    <div class="dest-card">
+      <img src="https://images.unsplash.com/photo-1549366021-9f761d040a94?w=600&q=80" alt="Kruger">
+      <div class="dest-card-overlay">
+        <div class="dest-country">South Africa</div>
+        <div class="dest-name">Kruger Park</div>
+        <div class="dest-desc">Africa's ultimate Big Five safari destination.</div>
+      </div>
+    </div>
+    <div class="dest-card">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt="Tsavo">
+      <div class="dest-card-overlay">
+        <div class="dest-country">Kenya</div>
+        <div class="dest-name">Tsavo</div>
+        <div class="dest-desc">Kenya's largest national park, wild and untamed.</div>
+      </div>
+    </div>
+    <div class="dest-card">
+      <img src="https://images.unsplash.com/photo-1552751753-0fc84ae5b6c8?w=600&q=80" alt="Cape Town">
+      <div class="dest-card-overlay">
+        <div class="dest-country">South Africa</div>
+        <div class="dest-name">Cape Town</div>
+        <div class="dest-desc">Where the mountains meet the sea in spectacular fashion.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <div class="services-header reveal">
+    <span class="section-tag">— What We Offer</span>
+    <h2 class="section-title">Everything You <em>Need to Explore</em></h2>
+    <div class="divider"></div>
+    <p style="color:var(--text-muted);max-width:550px;margin:0 auto;line-height:1.8;">From the moment you land to the minute you leave, Kega Safaris handles every detail of your African adventure.</p>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card"><span class="service-icon">🦁</span><div class="service-title">Kenya Safari Packages</div><p class="service-desc">Expertly curated game drives across all of Kenya's iconic national parks and private conservancies — Maasai Mara, Amboseli, Tsavo, Samburu, Lake Nakuru & beyond.</p></div>
+    <div class="service-card"><span class="service-icon">🌍</span><div class="service-title">South Africa Tours</div><p class="service-desc">Full South Africa trip planning — Kruger safaris, Cape Town adventures, Garden Route road trips, Winelands escapes, and Drakensberg mountain retreats.</p></div>
+    <div class="service-card"><span class="service-icon">✈️</span><div class="service-title">Flight Booking</div><p class="service-desc">We handle all your flight arrangements — international connections, domestic routes, and bush flights to remote airstrips — at competitive prices.</p></div>
+    <div class="service-card"><span class="service-icon">🏨</span><div class="service-title">Hotel & Lodge Booking</div><p class="service-desc">From luxury lodges and tented camps in the bush to boutique city hotels — we book the perfect accommodation to match your style and budget.</p></div>
+    <div class="service-card"><span class="service-icon">🚐</span><div class="service-title">Airport & Hotel Transfers</div><p class="service-desc">Seamless, comfortable transfers between airports, hotels, and safari camps. Our professional drivers ensure you arrive relaxed and on time, every time.</p></div>
+    <div class="service-card"><span class="service-icon">🗺️</span><div class="service-title">Custom Itineraries</div><p class="service-desc">Tell us your dream trip and we'll craft a bespoke Africa itinerary around your budget, time, and travel style — whether solo, couple, family, or group.</p></div>
+  </div>
+</section>
+
+<!-- MAASAI MARA FEATURE -->
+<div class="mara-section" id="maasai-mara">
+  <div class="mara-images">
+    <img class="mara-img-main" src="https://images.unsplash.com/photo-1516426122078-c23e76319801?w=900&q=85" alt="Maasai Mara">
+    <div class="mara-img-overlay"></div>
+    <div class="mara-badge-float"><span>🌅 Peak Season</span><strong>July – October</strong></div>
+  </div>
+  <div class="mara-content reveal">
+    <span class="section-tag">— Our Signature Destination</span>
+    <h2 class="section-title">Maasai Mara<br><em>The Jewel of Kenya</em></h2>
+    <div class="divider"></div>
+    <p style="color:var(--text-muted);line-height:1.8;font-size:0.95rem;">The Maasai Mara is Africa at its most raw and magnificent. Home to the world-famous Great Wildebeest Migration, the Big Five, and breathtaking sunsets that stretch to infinity.</p>
+    <div class="mara-highlights">
+      <div class="mara-highlight"><span class="mara-highlight-icon">🐃</span><div class="mara-highlight-text"><h4>Great Wildebeest Migration</h4><p>Over 1.5 million wildebeest cross the Mara River each year — nature's greatest spectacle.</p></div></div>
+      <div class="mara-highlight"><span class="mara-highlight-icon">🦁</span><div class="mara-highlight-text"><h4>Big Five Game Drives</h4><p>Lion, leopard, elephant, buffalo & rhino — all within reach on expert-guided game drives.</p></div></div>
+      <div class="mara-highlight"><span class="mara-highlight-icon">🎈</span><div class="mara-highlight-text"><h4>Hot Air Balloon Safaris</h4><p>Float above the plains at dawn for a breathtaking bird's-eye view of wildlife below.</p></div></div>
+      <div class="mara-highlight"><span class="mara-highlight-icon">🏕️</span><div class="mara-highlight-text"><h4>Luxury Tented Camps</h4><p>Sleep under canvas with all the comforts of a luxury hotel, just steps from the bush.</p></div></div>
+    </div>
+    <div style="margin-top:2rem;"><a href="#booking" class="btn-primary">Book Maasai Mara Safari</a></div>
+  </div>
+</div>
+
+<!-- KENYA PARKS -->
+<section class="parks-section" id="parks">
+  <div class="parks-header reveal">
+    <span class="section-tag">— Kenya's Wildlife Gems</span>
+    <h2 class="section-title">All Kenya Parks <em>&amp; Reserves</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="parks-scroll reveal">
+    <div class="park-pill"><span class="park-pill-emoji">🦒</span><div class="park-pill-name">Maasai Mara</div><div class="park-pill-region">Narok County</div></div>
+    <div class="park-pill"><span class="park-pill-emoji">🐘</span><div class="park-pill-name">Amboseli</div><div class="park-pill-region">Kajiado County</div></div>
+    <div class="park-pill"><span class="park-pill-emoji">🦏</span><div class="park-pill-name">Tsavo East</div><div class="park-pill-region">Coast Region</div></div>
+    <div class="park-pill"><span class="park-pill-emoji">🌲</span><div class="park-pill-name">Tsavo West</div><div class="park-pill-region">Coast Region</div></div>
+    <div class="park-pill"><span class="park-pill-emoji">🦩</span><div class="park-pill-name">Lake Nakuru</div><div class="park-pill-region">Rift Valley</div></div>
+    <div class="park-pill"><span class="park-pill-emoji">🐆</span><div class="park-pill-name">Samburu</div><div class="park-pill-region">Northern Kenya</div></div>
+    <div class="park-pill"><span class="park-pill-emoji">🐋</span><div class="park-pill-name">Watamu Marine</div><div class="park-pill-region">Coast Region</div></div>
+    <div class="park-pill"><span class="park-pill-emoji">⛰️</span><div class="park-pill-name">Mt. Kenya NP</div><div class="park-pill-region">Central Kenya</div></div>
+    <div class="park-pill"><span class="park-pill-emoji">🦓</span><div class="park-pill-name">Hell's Gate</div><div class="park-pill-region">Naivasha</div></div>
+    <div class="park-pill"><span class="park-pill-emoji">🌊</span><div class="park-pill-name">Lake Bogoria</div><div class="park-pill-region">Rift Valley</div></div>
+    <div class="park-pill"><span class="park-pill-emoji">🌺</span><div class="park-pill-name">Aberdare NP</div><div class="park-pill-region">Central Kenya</div></div>
+    <div class="park-pill"><span class="park-pill-emoji">🐊</span><div class="park-pill-name">Nairobi NP</div><div class="park-pill-region">Nairobi</div></div>
+  </div>
+</section>
+
+<!-- SOUTH AFRICA -->
+<div class="sa-section" id="south-africa">
+  <div class="sa-content reveal">
+    <span class="section-tag">— Southern Africa</span>
+    <h2 class="section-title">Discover<br><em>South Africa</em></h2>
+    <div class="divider"></div>
+    <p style="color:var(--text-muted);line-height:1.8;margin-bottom:1.5rem;">From the raw wilderness of Kruger to the cosmopolitan beauty of Cape Town, South Africa offers an astonishing range of experiences — all expertly arranged by Kega Safaris.</p>
+    <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.8;">Whether you dream of Big Five game drives, wine tasting in Stellenbosch, whale watching along the coast, or hiking the Drakensberg — we plan it all.</p>
+    <div style="margin-top:2rem;"><a href="#booking" class="btn-primary">Plan South Africa Trip</a></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;min-height:500px;">
+    <div class="sa-card"><img src="https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=500&q=80" alt="Kruger"><div class="sa-card-label">Kruger National Park</div></div>
+    <div class="sa-card"><img src="https://images.unsplash.com/photo-1596402184320-417e7178b2cd?w=500&q=80" alt="Cape Town"><div class="sa-card-label">Cape Town</div></div>
+    <div class="sa-card"><img src="https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=500&q=80" alt="Garden Route"><div class="sa-card-label">Garden Route</div></div>
+    <div class="sa-card"><img src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=500&q=80" alt="Winelands"><div class="sa-card-label">Cape Winelands</div></div>
+  </div>
+</div>
+
+<!-- BOOKING -->
+<section class="booking-section" id="booking">
+  <div class="booking-inner reveal">
+    <span class="section-tag" style="display:block;margin-bottom:0.5rem;">— Start Your Journey</span>
+    <h2 class="section-title" style="font-size:clamp(2rem,3vw,3rem);">Request Your <em>Safari Quote</em></h2>
+    <div class="divider" style="margin:1.5rem auto;"></div>
+    <p style="color:var(--text-muted);line-height:1.8;">Fill in your details and our safari experts will craft a personalised itinerary just for you — no obligation, completely free.</p>
+    <div class="booking-form">
+      <div class="form-group">
+        <label>Destination</label>
+        <select>
+          <option value="">Select Destination</option>
+          <option>Maasai Mara, Kenya</option>
+          <option>Amboseli, Kenya</option>
+          <option>Tsavo, Kenya</option>
+          <option>Samburu, Kenya</option>
+          <option>Lake Nakuru, Kenya</option>
+          <option>All Kenya Parks</option>
+          <option>Kruger, South Africa</option>
+          <option>Cape Town, South Africa</option>
+          <option>Garden Route, South Africa</option>
+          <option>Full South Africa</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Travel Date</label><input type="date"></div>
+      <div class="form-group">
+        <label>Number of Guests</label>
+        <select>
+          <option>1 Person</option><option>2 People</option><option>3–5 People</option><option>6–10 People</option><option>Group (10+)</option>
+        </select>
+      </div>
+      <div class="form-submit"><button class="btn-primary" onclick="alert('Thank you! Our team will contact you shortly.')">Get Quote →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="testimonials-header reveal">
+    <span class="section-tag">— Traveller Stories</span>
+    <h2 class="section-title">Words From Our <em>Happy Explorers</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="testimonials-grid reveal">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"Our Maasai Mara safari with Kega was beyond anything I imagined. We witnessed the Great Migration crossing — I was in tears. Absolutely flawless organisation from start to finish."</p>
+      <div class="testi-author"><div class="testi-avatar">S</div><div><div class="testi-name">Sarah M.</div><div class="testi-location">London, United Kingdom</div></div></div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"Kega arranged our full South Africa trip — Kruger, Cape Town, and the Winelands. Every hotel, every transfer, every game drive was perfect. Highly professional team."</p>
+      <div class="testi-author"><div class="testi-avatar">J</div><div><div class="testi-name">Johan & Anna K.</div><div class="testi-location">Amsterdam, Netherlands</div></div></div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"The airport transfer and hotel booking was seamless. Our guide in Amboseli was exceptional — we got incredible photos of elephants with Kilimanjaro. Will definitely book again!"</p>
+      <div class="testi-author"><div class="testi-avatar">A</div><div><div class="testi-name">Amara T.</div><div class="testi-location">Lagos, Nigeria</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="contact-info">
+    <span class="section-tag">— Get In Touch</span>
+    <h2 class="section-title">Let's Plan<br><em>Your Adventure</em></h2>
+    <div class="divider"></div>
+    <p style="color:var(--text-muted);line-height:1.8;font-size:0.9rem;">Our team of Africa travel experts is ready to help you design the perfect safari. Reach out today and let's start planning your dream trip.</p>
+    <div class="contact-items">
+      <div class="contact-item"><div class="contact-item-icon">📍</div><div class="contact-item-text"><h4>Location</h4><p>Nairobi, Kenya</p></div></div>
+      <div class="contact-item"><div class="contact-item-icon">📞</div><div class="contact-item-text"><h4>Phone / WhatsApp</h4><p>+254 700 000 000</p></div></div>
+      <div class="contact-item"><div class="contact-item-icon">✉️</div><div class="contact-item-text"><h4>Email</h4><p>info@kegasafaris.com</p></div></div>
+      <div class="contact-item"><div class="contact-item-icon">⏰</div><div class="contact-item-text"><h4>Operating Hours</h4><p>Mon – Sat: 8:00 AM – 6:00 PM EAT</p></div></div>
+    </div>
+  </div>
+  <div class="contact-form-side reveal">
+    <span class="section-tag">— Send a Message</span>
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--cream);margin-top:0.5rem;">We'd love to <em style="color:var(--gold-light);">hear from you</em></h3>
+    <div class="contact-form">
+      <input type="text" placeholder="Your Full Name">
+      <input type="email" placeholder="Email Address">
+      <input type="tel" placeholder="Phone / WhatsApp">
+      <select>
+        <option value="" disabled selected>I'm interested in...</option>
+        <option>Kenya Safari Package</option>
+        <option>South Africa Trip</option>
+        <option>Airport Transfer</option>
+        <option>Hotel Booking</option>
+        <option>Flight Booking</option>
+        <option>Custom Itinerary</option>
+      </select>
+      <textarea placeholder="Tell us about your dream trip — destination, dates, number of travellers, any special requests..."></textarea>
+      <button class="btn-primary" onclick="alert('Message sent! We\'ll get back to you within 24 hours.')">Send Message →</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo"><span class="logo-main">Kega Safaris</span><span class="logo-sub">Discover Africa's Wild Soul</span></div>
+      <p>Your trusted partner for unforgettable African adventures. From Kenya's iconic savannahs to South Africa's diverse landscapes — we make the wild accessible.</p>
+    </div>
+    <div class="footer-col"><h4>Destinations</h4><ul><li><a href="#">Maasai Mara</a></li><li><a href="#">Amboseli</a></li><li><a href="#">Tsavo</a></li><li><a href="#">Samburu</a></li><li><a href="#">Kruger, SA</a></li><li><a href="#">Cape Town, SA</a></li></ul></div>
+    <div class="footer-col"><h4>Services</h4><ul><li><a href="#">Safari Packages</a></li><li><a href="#">Flight Booking</a></li><li><a href="#">Hotel Booking</a></li><li><a href="#">Airport Transfers</a></li><li><a href="#">South Africa Tours</a></li><li><a href="#">Custom Itineraries</a></li></ul></div>
+    <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Gallery</a></li><li><a href="#booking">Get a Quote</a></li><li><a href="#contact">Contact Us</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Kega Safaris. All rights reserved. | Nairobi, Kenya</p>
+    <div class="social-links">
+      <a href="#" class="social-link">📘</a>
+      <a href="#" class="social-link">📷</a>
+      <a href="#" class="social-link">🐦</a>
+      <a href="#" class="social-link">💬</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* HERO SLIDESHOW */
+  const heroSlides = document.querySelectorAll('.hero-slide');
+  const heroCaptions = ['Maasai Mara, Kenya','African Elephant, Amboseli','Cheetah on the Savannah, Kenya','Amboseli – Mount Kilimanjaro View','Kruger National Park, South Africa','Cape Town, South Africa','Kruger Safari Drive, South Africa','Tsavo National Park, Kenya','Wildebeest Migration, Mara River','African Lion at Sunset'];
+  const heroCaptionEl = document.getElementById('heroCaption');
+  const heroDotsCont = document.getElementById('heroDots');
+  let heroCurrent = 0, heroTimer;
+
+  heroSlides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'hero-dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goHeroSlide(i));
+    heroDotsCont.appendChild(d);
+  });
+
+  function goHeroSlide(index) {
+    heroSlides[heroCurrent].classList.remove('active');
+    document.querySelectorAll('.hero-dot')[heroCurrent].classList.remove('active');
+    heroCurrent = (index + heroSlides.length) % heroSlides.length;
+    heroSlides[heroCurrent].classList.add('active');
+    document.querySelectorAll('.hero-dot')[heroCurrent].classList.add('active');
+    heroCaptionEl.style.opacity = '0';
+    setTimeout(() => { heroCaptionEl.textContent = heroCaptions[heroCurrent]; heroCaptionEl.style.opacity = '1'; }, 400);
+    clearInterval(heroTimer);
+    heroTimer = setInterval(() => goHeroSlide(heroCurrent + 1), 6000);
+  }
+
+  document.getElementById('heroPrev').addEventListener('click', () => goHeroSlide(heroCurrent - 1));
+  document.getElementById('heroNext').addEventListener('click', () => goHeroSlide(heroCurrent + 1));
+  heroCaptionEl.style.transition = 'opacity 0.5s';
+  heroTimer = setInterval(() => goHeroSlide(heroCurrent + 1), 6000);
+
+  /* GALLERY SLIDESHOW */
+  const galleryImages = [
+    { src: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=1400&q=90', loc: '📍 Maasai Mara, Kenya' },
+    { src: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=1400&q=90', loc: '📍 African Elephant, Kenya' },
+    { src: 'https://images.unsplash.com/photo-1504618223053-559bdef9dd5a?w=1400&q=90', loc: '📍 Cheetah on the Plains, Kenya' },
+    { src: 'https://images.unsplash.com/photo-1534177616072-ef7dc120449d?w=1400&q=90', loc: '📍 Amboseli – Kilimanjaro, Kenya' },
+    { src: 'https://images.unsplash.com/photo-1549366021-9f761d040a94?w=1400&q=90', loc: '📍 Kruger National Park, South Africa' },
+    { src: 'https://images.unsplash.com/photo-1552751753-0fc84ae5b6c8?w=1400&q=90', loc: '📍 Cape Town, South Africa' },
+    { src: 'https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=1400&q=90', loc: '📍 Kruger Safari, South Africa' },
+    { src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=90', loc: '📍 Tsavo National Park, Kenya' },
+    { src: 'https://images.unsplash.com/photo-1540202403-b7abd6747a18?w=1400&q=90', loc: '📍 Wildebeest Migration, Mara River' },
+    { src: 'https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=1400&q=90', loc: '📍 African Fox at Sunrise' },
+    { src: 'https://images.unsplash.com/photo-1568266606687-19d16a55426d?w=1400&q=90', loc: '📍 Giraffe, Maasai Mara' },
+    { src: 'https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?w=1400&q=90', loc: '📍 Samburu Reserve, Kenya' },
+    { src: 'https://images.unsplash.com/photo-1619468129361-605ebea04ed7?w=1400&q=90', loc: '📍 Flamingos, Lake Nakuru, Kenya' },
+    { src: 'https://images.unsplash.com/photo-1528158222524-d4d912d2e208?w=1400&q=90', loc: '📍 Cape of Good Hope, South Africa' }
+  ];
+
+  const galMain = document.getElementById('galleryMain');
+  const galLoc = document.getElementById('galleryLocation');
+  const galCounter = document.getElementById('galleryCounter');
+  const galThumbs = document.getElementById('galleryThumbs');
+  const galPlayBtn = document.getElementById('galleryPlayBtn');
+  const galProgress = document.getElementById('galleryProgress');
+  let galCurrent = 0, galPlaying = true, galInterval;
+  const GAL_DURATION = 4000;
+
+  galleryImages.forEach((img, i) => {
+    const t = document.createElement('img');
+    t.src = img.src.replace('w=1400', 'w=220');
+    t.alt = img.loc;
+    t.className = 'gallery-thumb' + (i === 0 ? ' active' : '');
+    t.addEventListener('click', () => goGallery(i, true));
+    galThumbs.appendChild(t);
+  });
+
+  function goGallery(index, resetTimer = false) {
+    galMain.classList.add('fade-out');
+    setTimeout(() => {
+      galCurrent = (index + galleryImages.length) % galleryImages.length;
+      galMain.src = galleryImages[galCurrent].src;
+      galLoc.textContent = galleryImages[galCurrent].loc;
+      galCounter.textContent = `${galCurrent + 1} / ${galleryImages.length}`;
+      galMain.classList.remove('fade-out');
+      document.querySelectorAll('.gallery-thumb').forEach((t, i) => t.classList.toggle('active', i === galCurrent));
+      const activeThumb = galThumbs.children[galCurrent];
+      if (activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }, 350);
+    galProgress.style.transition = 'none';
+    galProgress.style.width = '0%';
+    setTimeout(() => { galProgress.style.transition = `width ${GAL_DURATION}ms linear`; galProgress.style.width = '100%'; }, 20);
+    if (resetTimer) { clearInterval(galInterval); if (galPlaying) startGalInterval(); }
+  }
+
+  function startGalInterval() { galInterval = setInterval(() => goGallery(galCurrent + 1), GAL_DURATION); }
+
+  const galObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && galPlaying && !galInterval) { goGallery(0); startGalInterval(); }
+  }, { threshold: 0.2 });
+  galObserver.observe(document.getElementById('gallery'));
+
+  document.getElementById('galleryPrev').addEventListener('click', () => { clearInterval(galInterval); goGallery(galCurrent - 1, true); });
+  document.getElementById('galleryNext').addEventListener('click', () => { clearInterval(galInterval); goGallery(galCurrent + 1, true); });
+
+  galPlayBtn.addEventListener('click', () => {
+    galPlaying = !galPlaying;
+    if (galPlaying) { startGalInterval(); galPlayBtn.textContent = '⏸ Pause Slideshow'; }
+    else { clearInterval(galInterval); galProgress.style.transition = 'none'; galProgress.style.width = '0%'; galPlayBtn.textContent = '▶ Play Slideshow'; }
+  });
+
+  /* SCROLL REVEAL */
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  /* NAV SCROLL */
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) { nav.style.background = 'rgba(13,13,11,0.97)'; nav.style.backdropFilter = 'blur(12px)'; nav.style.borderBottom = '1px solid rgba(201,144,42,0.15)'; }
+    else { nav.style.background = 'linear-gradient(to bottom, rgba(13,13,11,0.95), transparent)'; nav.style.backdropFilter = 'blur(2px)'; nav.style.borderBottom = 'none'; }
+  });
+</script>
+</body>
+</html>
