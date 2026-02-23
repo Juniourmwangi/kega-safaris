@@ -181,13 +181,33 @@
   .services-header { text-align:center; margin-bottom:4rem; position:relative; }
   .services-header .divider { margin:1.5rem auto; }
   .services-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; position:relative; }
-  .service-card { background:linear-gradient(135deg,rgba(61,43,31,0.4),rgba(22,22,16,0.8)); border:1px solid rgba(201,144,42,0.2); padding:2.5rem; transition:border-color 0.3s,transform 0.3s,background 0.3s; position:relative; overflow:hidden; }
-  .service-card::before { content:''; position:absolute; bottom:0; left:0; width:0; height:2px; background:var(--gold); transition:width 0.4s; }
+
+  /* SERVICE CARD — with image */
+  .service-card {
+    background:linear-gradient(135deg,rgba(61,43,31,0.4),rgba(22,22,16,0.8));
+    border:1px solid rgba(201,144,42,0.2);
+    transition:border-color 0.3s,transform 0.3s,background 0.3s;
+    position:relative; overflow:hidden;
+  }
+  .service-card::before { content:''; position:absolute; bottom:0; left:0; width:0; height:2px; background:var(--gold); transition:width 0.4s; z-index:2; }
   .service-card:hover::before { width:100%; }
   .service-card:hover { border-color:rgba(201,144,42,0.5); transform:translateY(-4px); }
-  .service-icon { font-size:2.5rem; margin-bottom:1.2rem; display:block; }
-  .service-title { font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700; color:var(--cream); margin-bottom:0.8rem; }
-  .service-desc { font-size:0.88rem; color:var(--text-muted); line-height:1.8; }
+
+  .service-card-img {
+    width:100%;
+    height:200px;
+    object-fit:cover;
+    display:block;
+    transition:transform 0.6s ease;
+    filter:brightness(0.85) saturate(1.1);
+  }
+  .service-card:hover .service-card-img { transform:scale(1.06); }
+
+  .service-card-body { padding:1.8rem 2rem 2rem; }
+  .service-icon { font-size:2rem; margin-bottom:0.8rem; display:block; }
+  .service-title { font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; color:var(--cream); margin-bottom:0.6rem; }
+  .service-desc { font-size:0.85rem; color:var(--text-muted); line-height:1.8; }
+
 
   /* ======= MAASAI MARA ======= */
   .mara-section { background:var(--dark2); padding:0; display:grid; grid-template-columns:1fr 1fr; min-height:600px; }
@@ -508,22 +528,22 @@
 <section class="hero" id="home">
   <!-- 10 slides — images load from Unsplash, fallback gradients show if blocked -->
   <div class="hero-slide active">
-    <img src="Images\Safari car.jpg" alt="Maasai Mara Kenya" loading="eager">
+    <img src="Images\Maasai Mara.jpg" alt="Maasai Mara Kenya" loading="eager">
   </div>
   <div class="hero-slide">
     <img src="Images\Africa Elephant.jpg" alt="African Elephant Amboseli" loading="lazy">
   </div>
   <div class="hero-slide">
-    <img src="Images\📍 Cheetah on the Plains, Kenya.jpg" alt="Cheetah Savannah Kenya" loading="lazy">
+    <img src="Images\Cheetah on the Plains, Kenya.jpg" alt="Cheetah Savannah Kenya" loading="lazy">
   </div>
   <div class="hero-slide">
     <img src="Images\Amboseli – Kilimanjaro, Kenya.jpg" alt="Amboseli Kilimanjaro" loading="lazy">
   </div>
   <div class="hero-slide">
-    <img src="Images\Kruger National Park, South Africa.jpg" alt="Kruger National Park" loading="lazy">
+    <img src="Images\Amboseli – Kilimanjaro, Kenya.jpg" alt="Kruger National Park" loading="lazy">
   </div>
   <div class="hero-slide">
-    <img src="Images/Cape Town, South Africa.jpg" alt="Cape Town South Africa" loading="lazy">
+    <img src="Images\Cape Town, South Africa.jpg" alt="Cape Town South Africa" loading="lazy">
   </div>
   <div class="hero-slide">
     <img src="Images\Kruger National Park, South Africa.jpg" alt="Kruger Safari Drive" loading="lazy">
@@ -532,7 +552,7 @@
     <img src="Images\Tsavo National Park, Kenya.jpg" alt="Tsavo National Park" loading="lazy">
   </div>
   <div class="hero-slide">
-    <img src="C:\Users\James Mwangi\Desktop\James\Skills\Project Kega\Images\Wildebeest Migration, Mara River.jpg" alt="Wildebeest Migration" loading="lazy">
+    <img src="Images\Wildebeest Migration, Mara River.jpg" alt="Wildebeest Migration" loading="lazy">
   </div>
   <div class="hero-slide">
     <img src="Images\African Wildlife at Sunrise.jpg" alt="African Wildlife Sunrise" loading="lazy">
@@ -620,7 +640,7 @@
       <div class="dest-card-overlay"><div class="dest-country">Kenya</div><div class="dest-name">Tsavo</div><div class="dest-desc">Kenya's largest national park, wild and untamed.</div></div>
     </div>
     <div class="dest-card">
-      <img src="Images/Cape Town, South Africa.jpg" alt="Cape Town" loading="lazy">
+      <img src="Images\Cape Town, South Africa.jpg" alt="Cape Town" loading="lazy">
       <div class="dest-card-overlay"><div class="dest-country">South Africa</div><div class="dest-name">Cape Town</div><div class="dest-desc">Where the mountains meet the sea in spectacular fashion.</div></div>
     </div>
   </div>
@@ -635,19 +655,93 @@
     <p style="color:var(--text-muted);max-width:550px;margin:0 auto;line-height:1.8;">From the moment you land to the minute you leave, Kega Safaris handles every detail of your African adventure.</p>
   </div>
   <div class="services-grid reveal">
-    <div class="service-card"><span class="service-icon">🦁</span><div class="service-title">Kenya Safari Packages</div><p class="service-desc">Expertly curated game drives across all of Kenya's iconic national parks and private conservancies — Maasai Mara, Amboseli, Tsavo, Samburu & beyond.</p></div>
-    <div class="service-card"><span class="service-icon">🌍</span><div class="service-title">South Africa Tours</div><p class="service-desc">Full South Africa trip planning — Kruger safaris, Cape Town adventures, Garden Route road trips, Winelands escapes, and Drakensberg retreats.</p></div>
-    <div class="service-card"><span class="service-icon">✈️</span><div class="service-title">Flight Booking</div><p class="service-desc">We handle all your flight arrangements — international connections, domestic routes, and bush flights to remote airstrips — at competitive prices.</p></div>
-    <div class="service-card"><span class="service-icon">🏨</span><div class="service-title">Hotel & Lodge Booking</div><p class="service-desc">From luxury lodges and tented camps in the bush to boutique city hotels — we book the perfect accommodation for your style and budget.</p></div>
-    <div class="service-card"><span class="service-icon">🚐</span><div class="service-title">Airport & Hotel Transfers</div><p class="service-desc">Seamless, comfortable transfers between airports, hotels, and safari camps. Our professional drivers ensure you arrive relaxed and on time.</p></div>
-    <div class="service-card"><span class="service-icon">🗺️</span><div class="service-title">Custom Itineraries</div><p class="service-desc">Tell us your dream trip and we'll craft a bespoke Africa itinerary around your budget, time, and travel style — solo, couple, family, or group.</p></div>
+
+    <!-- 1. Kenya Safari — Lion eating prey -->
+    <div class="service-card">
+      <img class="service-card-img"
+        src="Images\Kenya_Safari_Package.jpeg"
+        alt="Lion devouring prey on the Kenyan plains"
+        loading="lazy">
+      <div class="service-card-body">
+        
+        <div class="service-title">Kenya Safari Packages</div>
+        <p class="service-desc">Expertly curated game drives across all of Kenya's iconic national parks — Maasai Mara, Amboseli, Tsavo, Samburu & beyond. Witness the raw power of Africa's apex predators up close.</p>
+      </div>
+    </div>
+
+    <!-- 2. South Africa — Table Mountain -->
+    <div class="service-card">
+      <img class="service-card-img"
+        src="Images\South_Africa_Tours.jpeg"
+        alt="Table Mountain Cape Town South Africa"
+        loading="lazy">
+      <div class="service-card-body">
+       
+        <div class="service-title">South Africa Tours</div>
+        <p class="service-desc">Full South Africa trip planning — Kruger safaris, Cape Town with Table Mountain, Garden Route road trips, Winelands escapes, and Drakensberg retreats.</p>
+      </div>
+    </div>
+
+    <!-- 3. Flights — Kenya Airways / Dreamliner -->
+    <div class="service-card">
+      <img class="service-card-img"
+        src="Images\Flight_Booking.jpeg"
+        alt="Commercial aircraft in flight — Kenya Airways"
+        loading="lazy">
+      <div class="service-card-body">
+        
+        <div class="service-title">Flight Booking</div>
+        <p class="service-desc">We handle all your flight arrangements — international connections, domestic routes, and bush flights to remote airstrips — at competitive prices. Kenya Airways & major carriers.</p>
+      </div>
+    </div>
+
+    <!-- 4. Hotels — luxury lodge -->
+    <div class="service-card">
+      <img class="service-card-img"
+        src="Images\Hotel_Image.jpg"
+        alt="Luxury safari lodge pool overlooking the plains"
+        loading="lazy">
+      <div class="service-card-body">
+      
+        <div class="service-title">Hotel & Lodge Booking</div>
+        <p class="service-desc">From luxury lodges and tented camps in the bush to boutique city hotels — we book the perfect accommodation for your style and budget across Kenya and South Africa.</p>
+      </div>
+    </div>
+
+    <!-- 5. Transfers — airport / vehicle -->
+    <div class="service-card">
+      <img class="service-card-img"
+        src="Images\Airport Transfers.jpg"
+        alt="Luxury transfer vehicle at airport"
+        loading="lazy">
+      <div class="service-card-body">
+        
+        <div class="service-title">Airport & Hotel Transfers</div>
+        <p class="service-desc">Seamless, comfortable transfers between airports, hotels, and safari camps. Our professional drivers ensure you arrive relaxed and on time — every time.</p>
+      </div>
+    </div>
+
+    <!-- 6. Custom Itineraries — map/planning -->
+    <div class="service-card">
+      <img class="service-card-img"
+        src="Images\Custom Itineraries.jpg"
+        alt="Travel planning — custom itinerary map and compass"
+        loading="lazy">
+      <div class="service-card-body">
+        
+        <div class="service-title">Custom Itineraries</div>
+        <p class="service-desc">Tell us your dream trip and we'll craft a bespoke Africa itinerary around your budget, time, and travel style — solo, couple, family, or group. Every journey is unique.</p>
+      </div>
+    </div>
+
   </div>
 </section>
+
 
 <!-- MAASAI MARA -->
 <div class="mara-section" id="maasai-mara">
   <div class="mara-images">
-    <img class="mara-img-main" src="Images/African Wildlife at Sunrise.jpg" alt="Maasai Mara Sunrise" loading="lazy">
+    <img class="mara-img-main" src="C:\Users\James Mwangi\Desktop\James\Skills\Project Kega\Images\African Wildlife at Sunrise.jpg" alt="Maasai Mara Sunrise" loading="lazy">
     <div class="mara-img-overlay"></div>
     <div class="mara-badge-float"><span>🌅 Peak Season</span><strong>July – October</strong></div>
   </div>
@@ -936,20 +1030,20 @@
 =============================================================== */
 (function(){
   var images = [
-    {src:'Images\Maasai Mara.jpg',loc:'📍 Maasai Mara, Kenya'},
-    {src:'Images\Africa Elephant.jpg',loc:'📍 African Elephant, Kenya'},
-    {src:'Images/📍 Cheetah on the Plains, Kenya.jpg',loc:'📍 Cheetah on the Plains, Kenya'},
-    {src:'Images\Amboseli – Kilimanjaro, Kenya.jpg',loc:'📍 Amboseli – Kilimanjaro, Kenya'},
-    {src:'Images\Kruger National Park, South Africa.jpg',loc:'📍 Kruger National Park, South Africa'},
-    {src:'Images\Cape Town, South Africa.jpg',loc:'📍 Cape Town, South Africa'},
-    {src:'Images\Kruger National Park, South Africa.jpg',loc:'📍 Kruger Safari, South Africa'},
-    {src:'Images\Tsavo National Park, Kenya.jpg',loc:'📍 Tsavo National Park, Kenya'},
-    {src:'Images\Wildebeest Migration, Mara River.jpg',loc:'📍 Wildebeest Migration, Mara River'},
-    {src:'Images\African Wildlife at Sunrise.jpg',loc:'📍 African Wildlife at Sunrise'},
-    {src:'Images\Giraffe, Maasai Mara.jpg',loc:'📍 Giraffe, Maasai Mara'},
-    {src:'Images\Samburu Reserve, Kenya.jpg',loc:'📍 Samburu Reserve, Kenya'},
-    {src:'Images\Flamingos, Lake Nakuru, Kenya.jpg',loc:'📍 Flamingos, Lake Nakuru, Kenya'},
-    {src:'Images\Cape of Good Hope, South Africa.jpg',loc:'📍 Cape of Good Hope, South Africa'}
+    {src:'./Images/Maasai Mara.jpg',loc:'📍 Maasai Mara, Kenya'},
+    {src:'./Images/Africa Elephant.jpg',loc:'📍 African Elephant, Kenya'},
+    {src:'./Images/Cheetah on the Plains, Kenya.jpg',loc:'📍 Cheetah on the Plains, Kenya'},
+    {src:'./Images/Amboseli – Kilimanjaro, Kenya.jpg',loc:'📍 Amboseli – Kilimanjaro, Kenya'},
+    {src:'./Images/Kruger National Park, South Africa.jpg',loc:'📍 Kruger National Park, South Africa'},
+    {src:'./Images/Cape Town, South Africa.jpg',loc:'📍 Cape Town, South Africa'},
+    {src:'./Images/Kruger National Park, South Africa.jpg',loc:'📍 Kruger Safari, South Africa'},
+    {src:'./Images/Tsavo National Park, Kenya.jpg',loc:'📍 Tsavo National Park, Kenya'},
+    {src:'./Images/Wildebeest Migration, Mara River.jpg',loc:'📍 Wildebeest Migration, Mara River'},
+    {src:'./Images/African Wildlife at Sunrise.jpg',loc:'📍 African Wildlife at Sunrise'},
+    {src:'./Images/Giraffe, Maasai Mara.jpg',loc:'📍 Giraffe, Maasai Mara'},
+    {src:'./Images/Samburu Reserve, Kenya.jpg',loc:'📍 Samburu Reserve, Kenya'},
+    {src:'./Images/Flamingos, Lake Nakuru, Kenya.jpg',loc:'📍 Flamingos, Lake Nakuru, Kenya'},
+    {src:'./Images/Cape of Good Hope, South Africa.jpg',loc:'📍 Cape of Good Hope, South Africa'}
   ];
   var main=document.getElementById('galleryMain'),
       loc=document.getElementById('galleryLocation'),
@@ -1129,7 +1223,7 @@
 =============================================================== */
 window.addEventListener('scroll',function(){
   document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY>80);
-});
+},{passive: true});
 </script>
 </body>
 </html>
