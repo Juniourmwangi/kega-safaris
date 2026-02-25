@@ -467,6 +467,347 @@
     .gallery-section { padding:4rem 1.5rem 3rem; }
     .gallery-main-wrap { height:300px; }
   }
+  /* ================================================================
+    COMPLETE MOBILE RESPONSIVE CSS
+   
+================================================================ */
+
+/* ----------------------------------------------------------------
+   HAMBURGER MENU BUTTON (hidden on desktop, shown on mobile)
+---------------------------------------------------------------- */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 0.4rem;
+  background: transparent;
+  border: none;
+  z-index: 1100;
+}
+.hamburger span {
+  display: block;
+  width: 26px;
+  height: 2px;
+  background: var(--gold-light);
+  border-radius: 2px;
+  transition: transform 0.35s ease, opacity 0.3s ease, width 0.3s ease;
+  transform-origin: center;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile nav drawer */
+.nav-drawer {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(13,13,11,0.98);
+  backdrop-filter: blur(16px);
+  z-index: 1050;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.nav-drawer.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.nav-drawer a,
+.nav-drawer button {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--cream);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.nav-drawer a:hover,
+.nav-drawer button:hover { color: var(--gold-light); }
+.nav-drawer .drawer-cta {
+  background: var(--gold);
+  color: var(--dark) !important;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 1rem 2.5rem;
+  margin-top: 1rem;
+}
+
+
+/* ================================================================
+   SMALL SCREENS — max 480px (phones)
+================================================================ */
+@media (max-width: 480px) {
+
+  /* --- NAV --- */
+  nav { padding: 1rem 1.2rem; }
+  .logo-main { font-size: 1.2rem; }
+  .hamburger { display: flex; }
+  .nav-links { display: none !important; }
+
+  /* --- HERO --- */
+  .hero { height: 100svh; }
+  .hero-content { padding: 0 1.2rem; max-width: 100%; }
+  .hero-tag { font-size: 0.85rem; letter-spacing: 0.1em; }
+  .hero h1 { font-size: 2.4rem; line-height: 1.1; }
+  .hero-desc { font-size: 0.88rem; margin-top: 1rem; max-width: 100%; }
+  .hero-btns {
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 1.8rem;
+  }
+  .hero-btns .btn-primary,
+  .hero-btns .btn-outline {
+    width: 100%;
+    text-align: center;
+    padding: 0.9rem 1.5rem;
+    font-size: 0.78rem;
+  }
+  .hero-arrow { width: 36px; height: 36px; font-size: 1rem; }
+  .hero-arrow.left  { left: 0.8rem; }
+  .hero-arrow.right { right: 0.8rem; }
+  .hero-dots { right: 0.6rem; bottom: 5rem; }
+  .hero-caption { left: 1.2rem; bottom: 7.5rem; font-size: 0.78rem; }
+
+  /* --- STATS BAR --- */
+  .stats-bar {
+    grid-template-columns: 1fr 1fr;
+    padding: 1.5rem 1rem;
+    gap: 0.5rem;
+  }
+  .stat { padding: 0.8rem 0.5rem; }
+  .stat-number { font-size: 1.7rem; }
+  .stat-label { font-size: 0.65rem; }
+
+  /* --- GALLERY --- */
+  .gallery-section { padding: 3rem 1rem 2rem; }
+  .gallery-main-wrap { height: 240px; }
+  .gallery-location { font-size: 0.82rem; }
+  .gallery-counter { font-size: 0.68rem; }
+  .gallery-thumb { width: 80px; height: 52px; }
+  .gallery-controls { flex-direction: column; gap: 0.8rem; }
+  .gallery-play-btn { width: 100%; }
+  .gallery-progress-wrap { max-width: 100%; width: 100%; }
+
+  /* --- DESTINATIONS --- */
+  .destinations { padding: 3rem 1rem; }
+  .dest-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  .dest-header .btn-outline { width: 100%; text-align: center; }
+  .dest-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 0.8rem;
+  }
+  .dest-card { height: 220px; }
+  .dest-card:first-child { height: 280px; grid-row: auto; }
+  .dest-card:first-child .dest-name { font-size: 1.6rem; }
+  .dest-desc { max-height: 60px !important; }
+
+  /* --- SERVICES --- */
+  .services-section { padding: 3rem 1rem; }
+  .services-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .service-card-img { height: 160px; }
+  .service-card-body { padding: 1.2rem 1.2rem 1.5rem; }
+
+  /* --- MAASAI MARA --- */
+  .mara-section {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .mara-images { height: 280px; }
+  .mara-content { padding: 2.5rem 1.2rem; }
+  .mara-highlight { padding: 0.8rem; }
+  .mara-highlight-icon { font-size: 1.2rem; }
+  .mara-content .btn-primary { width: 100%; text-align: center; }
+
+  /* --- PARKS --- */
+  .parks-section { padding: 3rem 1rem; }
+  .parks-scroll { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+  .park-pill { padding: 0.9rem 0.5rem; }
+  .park-pill-name { font-size: 0.82rem; }
+
+  /* --- SOUTH AFRICA --- */
+  .sa-section {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+  .sa-content { padding: 2.5rem 1.2rem; order: 1; }
+  .sa-grid {
+    grid-template-columns: 1fr 1fr;
+    min-height: 280px;
+    order: 2;
+  }
+  .sa-content .btn-primary { width: 100%; text-align: center; }
+
+  /* --- BOOKING SECTION --- */
+  .booking-section { padding: 3rem 1rem; }
+  .booking-top {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .inquiry-form { padding: 1.5rem 1rem; }
+  .inquiry-form .form-row { grid-template-columns: 1fr; }
+  .form-actions { flex-direction: column; }
+  .form-actions .btn-primary,
+  .form-actions .btn-wa { width: 100%; justify-content: center; }
+  .booking-left .btn-wa { width: 100%; justify-content: center; }
+
+  /* --- TESTIMONIALS --- */
+  .testimonials-section { padding: 3rem 1rem; }
+  .testimonials-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .testi-quote { font-size: 0.98rem; }
+
+  /* --- CONTACT --- */
+  .contact-section { grid-template-columns: 1fr; }
+  .contact-info { padding: 3rem 1.2rem 2rem; }
+  .contact-form-side { padding: 2rem 1.2rem 3rem; }
+  .contact-form > div { flex-direction: column; }
+  .contact-form > div .btn-primary,
+  .contact-form > div .btn-wa { width: 100%; justify-content: center; }
+
+  /* --- FOOTER --- */
+  footer { padding: 3rem 1.2rem 1.5rem; }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  /* --- MODAL --- */
+  .modal { padding: 1.8rem 1.2rem; margin: 0.5rem; }
+  .modal .form-row { grid-template-columns: 1fr; }
+  .modal .form-actions { flex-direction: column; }
+  .modal .form-actions .btn-primary,
+  .modal .form-actions .btn-wa { width: 100%; justify-content: center; }
+
+  /* --- WHATSAPP FLOAT --- */
+  .wa-float { bottom: 1.2rem; right: 1.2rem; width: 50px; height: 50px; }
+  .wa-float svg { width: 26px; height: 26px; }
+  .wa-tooltip { display: none; }
+
+  /* --- SECTION TITLES --- */
+  .section-title { font-size: 1.8rem; }
+  section { padding: 3rem 1.2rem; }
+}
+
+
+/* ================================================================
+   MEDIUM SCREENS — 481px to 768px (large phones / small tablets)
+================================================================ */
+@media (min-width: 481px) and (max-width: 768px) {
+
+  nav { padding: 1rem 1.5rem; }
+  .hamburger { display: flex; }
+  .nav-links { display: none !important; }
+
+  .hero-content { padding: 0 2rem; }
+  .hero h1 { font-size: 3rem; }
+  .hero-btns { gap: 1rem; }
+
+  .stats-bar { grid-template-columns: 1fr 1fr; padding: 2rem 1.5rem; }
+
+  .gallery-main-wrap { height: 320px; }
+  .gallery-section { padding: 4rem 1.5rem 2.5rem; }
+
+  .dest-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .dest-card { height: 240px; }
+  .dest-card:first-child { height: 300px; grid-row: auto; }
+
+  .services-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .service-card-img { height: 170px; }
+
+  .mara-section { grid-template-columns: 1fr; }
+  .mara-images { height: 320px; }
+  .mara-content { padding: 3rem 2rem; }
+
+  .parks-scroll { grid-template-columns: repeat(3, 1fr); }
+
+  .sa-section { grid-template-columns: 1fr; }
+  .sa-content { padding: 3rem 2rem; order: 1; }
+  .sa-grid { min-height: 300px; order: 2; }
+
+  .booking-top { grid-template-columns: 1fr; gap: 2rem; }
+  .booking-section { padding: 4rem 2rem; }
+  .inquiry-form .form-row { grid-template-columns: 1fr; }
+
+  .testimonials-grid { grid-template-columns: 1fr; gap: 1rem; }
+
+  .contact-section { grid-template-columns: 1fr; }
+  .contact-info { padding: 3rem 2rem; }
+  .contact-form-side { padding: 2rem 2rem 3rem; }
+
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  footer { padding: 3rem 2rem 1.5rem; }
+
+  .modal .form-row { grid-template-columns: 1fr; }
+}
+
+
+/* ================================================================
+   TABLET SCREENS — 769px to 900px
+================================================================ */
+@media (min-width: 769px) and (max-width: 900px) {
+
+  nav { padding: 1rem 2rem; }
+  .hamburger { display: flex; }
+  .nav-links { display: none !important; }
+
+  .hero-content { padding: 0 3rem; }
+  .hero h1 { font-size: 3.8rem; }
+
+  .stats-bar { padding: 2rem 2rem; }
+
+  .gallery-main-wrap { height: 380px; }
+  .gallery-section { padding: 4rem 2rem 3rem; }
+
+  .dest-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+  .dest-card:first-child { grid-column: 1 / -1; height: 320px; grid-row: auto; }
+  .dest-card { height: 220px; }
+
+  .services-grid { grid-template-columns: 1fr 1fr; }
+
+  .mara-section { grid-template-columns: 1fr; }
+  .mara-images { height: 380px; }
+
+  .parks-scroll { grid-template-columns: repeat(3, 1fr); }
+
+  .sa-section { grid-template-columns: 1fr; }
+  .sa-content { order: 1; }
+  .sa-grid { min-height: 350px; order: 2; }
+
+  .booking-top { grid-template-columns: 1fr; }
+  .booking-section { padding: 4rem 2.5rem; }
+
+  .testimonials-grid { grid-template-columns: 1fr 1fr; }
+
+  .contact-section { grid-template-columns: 1fr; }
+
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
 </style>
 </head>
 <body>
@@ -555,6 +896,11 @@
     <span class="logo-main">Kega Safaris</span>
     <span class="logo-sub">Discover Africa's Wild Soul</span>
   </a>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
   <ul class="nav-links">
     <li><a href="#destinations">Destinations</a></li>
     <li><a href="#gallery">Gallery</a></li>
@@ -565,6 +911,15 @@
     <li><button class="nav-cta open-modal">Book Now</button></li>
   </ul>
 </nav>
+<div class="nav-drawer" id="navDrawer">
+  <a href="#destinations"  onclick="closeDrawer()">Destinations</a>
+  <a href="#gallery"       onclick="closeDrawer()">Gallery</a>
+  <a href="#services"      onclick="closeDrawer()">Services</a>
+  <a href="#maasai-mara"   onclick="closeDrawer()">Maasai Mara</a>
+  <a href="#south-africa"  onclick="closeDrawer()">South Africa</a>
+  <a href="#contact"       onclick="closeDrawer()">Contact</a>
+  <button class="drawer-cta open-modal" onclick="closeDrawer()">Book Now</button>
+</div>
 
 <!-- HERO SLIDESHOW -->
 <section class="hero" id="home">
@@ -1277,6 +1632,40 @@
 window.addEventListener('scroll',function(){
   document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY>80);
 },{passive: true});
+/* ===============================================================
+   HAMBURGER / MOBILE NAV DRAWER
+=============================================================== */
+(function(){
+  var hamburger = document.getElementById('hamburger');
+  var drawer    = document.getElementById('navDrawer');
+  var isOpen    = false;
+
+  function openDrawer(){
+    isOpen = true;
+    hamburger.classList.add('open');
+    drawer.style.display = 'flex';
+    setTimeout(function(){ drawer.classList.add('open'); }, 10);
+    document.body.style.overflow = 'hidden';
+  }
+
+  window.closeDrawer = function(){
+    isOpen = false;
+    hamburger.classList.remove('open');
+    drawer.classList.remove('open');
+    setTimeout(function(){ drawer.style.display = 'none'; }, 350);
+    document.body.style.overflow = '';
+  };
+
+  hamburger.addEventListener('click', function(){
+    if(isOpen) closeDrawer();
+    else openDrawer();
+  });
+
+  // Close on ESC key
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && isOpen) closeDrawer();
+  });
+})();
 </script>
 <!-- ======= STRUCTURED DATA / SCHEMA MARKUP ======= -->
 <script type="application/ld+json">
