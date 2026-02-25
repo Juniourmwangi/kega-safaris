@@ -809,6 +809,11 @@
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 </style>
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  emailjs.init('YEaNkOcepb6ZEnOq-O'); // ← replace with your actual public key
+</script>
 </head>
 <body>
 
@@ -1543,11 +1548,45 @@
 
   // Modal email submit
   document.getElementById('modalSubmitEmail').addEventListener('click', function(){
-    var name=document.getElementById('m-name').value.trim();
-    var phone=document.getElementById('m-phone').value.trim();
-    if(!name||!phone){ alert('Please enter your name and phone number.'); return; }
-   alert('Thank you '+name+'! Our team will contact you within 2 hours. You can also reach us directly on WhatsApp.');
-    closeModal();
+    var name   = document.getElementById('m-name').value.trim();
+    var phone  = document.getElementById('m-phone').value.trim();
+    var email  = document.getElementById('m-email').value.trim();
+    var dest   = document.getElementById('m-dest').value;
+    var date   = document.getElementById('m-date').value;
+    var guests = document.getElementById('m-guests').value;
+    var msg    = document.getElementById('m-msg').value.trim();
+
+    // Validation
+    if(!name)  { alert('⚠️ Please enter your full name.');     return; }
+    if(!phone) { alert('⚠️ Please enter your phone number.');  return; }
+    if(!email) { alert('⚠️ Please enter your email address.'); return; }
+    if(!dest)  { alert('⚠️ Please select a destination.');     return; }
+
+    var btn = document.getElementById('modalSubmitEmail');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+      from_name:   name,
+      phone:       phone,
+      reply_to:    email,
+      destination: dest,
+      travel_date: date || 'Not specified',
+      guests:      guests,
+      message:     msg || 'No additional message'
+    })
+    .then(function(){
+      alert('✅ Thank you ' + name + '! We will contact you within 2 hours.');
+      btn.textContent = 'Send Enquiry ✉️';
+      btn.disabled = false;
+      closeModal();
+    })
+    .catch(function(error){
+      alert('❌ Something went wrong. Please try WhatsApp instead.');
+      console.error('EmailJS error:', error);
+      btn.textContent = 'Send Enquiry ✉️';
+      btn.disabled = false;
+    });
   });
 })();
 
@@ -1581,9 +1620,53 @@
     var text = buildWAText('b-');
     window.open('https://wa.me/254742384568?text='+encodeURIComponent(text),'_blank');
   });
-  if(bEM) bEM.addEventListener('click', function(){
-    var name=(document.getElementById('b-name')||{}).value||'Guest';
-    alert('Thank you '+name+'! Our safari experts will reach out within 2 hours.');
+ if(bEM) bEM.addEventListener('click', function(){
+    var name   = document.getElementById('b-name').value.trim();
+    var phone  = document.getElementById('b-phone').value.trim();
+    var email  = document.getElementById('b-email').value.trim();
+    var dest   = document.getElementById('b-dest').value;
+    var date   = document.getElementById('b-date').value;
+    var guests = document.getElementById('b-guests').value;
+    var msg    = document.getElementById('b-msg').value.trim();
+
+    // Validation
+    if(!name)  { alert('⚠️ Please enter your full name.');      return; }
+    if(!phone) { alert('⚠️ Please enter your phone number.');   return; }
+    if(!email) { alert('⚠️ Please enter your email address.');  return; }
+    if(!dest)  { alert('⚠️ Please select a destination.');      return; }
+    if(!date)  { alert('⚠️ Please select your travel date.');   return; }
+
+    // Show loading state
+    bEM.textContent = 'Sending...';
+    bEM.disabled = true;
+
+    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+      from_name:   name,
+      phone:       phone,
+      reply_to:    email,
+      destination: dest,
+      travel_date: date,
+      guests:      guests,
+      message:     msg || 'No additional message'
+    })
+    .then(function(){
+      alert('✅ Thank you ' + name + '! Your enquiry has been sent. We will contact you within 2 hours.');
+      // Clear form
+      document.getElementById('b-name').value  = '';
+      document.getElementById('b-phone').value = '';
+      document.getElementById('b-email').value = '';
+      document.getElementById('b-dest').value  = '';
+      document.getElementById('b-date').value  = '';
+      document.getElementById('b-msg').value   = '';
+      bEM.textContent = 'Send Enquiry ✉️';
+      bEM.disabled = false;
+    })
+    .catch(function(error){
+      alert('❌ Something went wrong. Please try WhatsApp or call us directly.');
+      console.error('EmailJS error:', error);
+      bEM.textContent = 'Send Enquiry ✉️';
+      bEM.disabled = false;
+    });
   });
 
   // Contact section
