@@ -38,8 +38,10 @@
 <link rel="canonical" href="https://www.kegasafaris.co.ke/">
 
 <!-- ======= FAVICON ======= -->
-<link rel="icon" type="image/png" href="/Images/favicon.png">
-<link rel="apple-touch-icon" href="/Images/favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="Images\apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="Images\favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="Images\favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -260,6 +262,9 @@
   .mara-highlight-icon { font-size:1.5rem; flex-shrink:0; }
   .mara-highlight-text h4 { font-family:'Playfair Display',serif; font-size:1rem; color:var(--cream); margin-bottom:0.2rem; }
   .mara-highlight-text p { font-size:0.82rem; color:var(--text-muted); line-height:1.6; }
+  .mara-images {
+  background: linear-gradient(135deg, #3a2010, #7a4510, #1a0d04);
+}
 
   /* ======= PARKS ======= */
   .parks-section { background:var(--dark); }
@@ -778,7 +783,7 @@
 <!-- MAASAI MARA -->
 <div class="mara-section" id="maasai-mara">
   <div class="mara-images">
-    <img class="mara-img-main" src="C:\Users\James Mwangi\Desktop\James\Skills\Project Kega\Images\African Wildlife at Sunrise.jpg" alt="Maasai Mara Sunrise" loading="lazy">
+    <img class="mara-img-main" src="Images/African Wildlife at Sunrise.jpg" alt="Maasai Mara Sunrise" loading="lazy" onerror="this.onerror=null;this.src='Images/Maasai Mara.jpg'">
     <div class="mara-img-overlay"></div>
     <div class="mara-badge-float"><span>🌅 Peak Season</span><strong>July – October</strong></div>
   </div>
@@ -1186,7 +1191,7 @@
     var name=document.getElementById('m-name').value.trim();
     var phone=document.getElementById('m-phone').value.trim();
     if(!name||!phone){ alert('Please enter your name and phone number.'); return; }
-   // alert('Thank you '+name+'! Our team will contact you within 2 hours. You can also reach us directly on WhatsApp.');
+   alert('Thank you '+name+'! Our team will contact you within 2 hours. You can also reach us directly on WhatsApp.');
     closeModal();
   });
 })();
@@ -1223,7 +1228,7 @@
   });
   if(bEM) bEM.addEventListener('click', function(){
     var name=(document.getElementById('b-name')||{}).value||'Guest';
-    //alert('Thank you '+name+'! Our safari experts will reach out within 2 hours.');
+    alert('Thank you '+name+'! Our safari experts will reach out within 2 hours.');
   });
 
   // Contact section
