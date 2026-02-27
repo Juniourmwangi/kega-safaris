@@ -812,7 +812,7 @@
 <!-- EmailJS -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-  emailjs.init('YEaNkOcepb6ZEnOq-O'); // ← replace with your actual public key
+  emailjs.init('EaNkOcepb6ZEnOq-O');
 </script>
 </head>
 <body>
@@ -1686,8 +1686,45 @@
     window.open('https://wa.me/254742384568?text='+encodeURIComponent(text),'_blank');
   });
   if(cEM) cEM.addEventListener('click', function(){
-    var name=(document.getElementById('c-name')||{}).value||'there';
-    alert('Thank you '+name+'! Your message has been received. We\'ll be in touch shortly.');
+    var name    = document.getElementById('c-name').value.trim();
+    var email   = document.getElementById('c-email').value.trim();
+    var phone   = document.getElementById('c-phone').value.trim();
+    var service = document.getElementById('c-service').value;
+    var msg     = document.getElementById('c-msg').value.trim();
+
+    if(!name)    { alert('⚠️ Please enter your full name.');     return; }
+    if(!email)   { alert('⚠️ Please enter your email address.'); return; }
+    if(!phone)   { alert('⚠️ Please enter your phone number.');  return; }
+    if(!service) { alert('⚠️ Please select a service.');         return; }
+    if(!msg)     { alert('⚠️ Please enter your message.');       return; }
+
+    cEM.textContent = 'Sending...';
+    cEM.disabled = true;
+
+    emailjs.send('service_qxr7v9l', 'template_uf28mcj', {
+      from_name:   name,
+      phone:       phone,
+      reply_to:    email,
+      destination: service,
+      travel_date: 'N/A',
+      guests:      'N/A',
+      message:     msg
+    })
+    .then(function(){
+      alert('✅ Thank you ' + name + '! We\'ll be in touch shortly.');
+      document.getElementById('c-name').value    = '';
+      document.getElementById('c-email').value   = '';
+      document.getElementById('c-phone').value   = '';
+      document.getElementById('c-service').value = '';
+      document.getElementById('c-msg').value     = '';
+      cEM.textContent = 'Send Message ✉️';
+      cEM.disabled = false;
+    })
+    .catch(function(error){
+      alert('❌ Something went wrong. Please try WhatsApp instead.');
+      cEM.textContent = 'Send Message ✉️';
+      cEM.disabled = false;
+    });
   });
 })();
 
